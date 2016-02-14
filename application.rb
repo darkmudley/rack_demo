@@ -1,11 +1,15 @@
 class Application
   def call(env)
-    path = env["REQUEST_PATH"]
+    request = Rack::Request.new(env)
 
-    [
-      200,
-      { 'Content-Type' => 'text/html' },
-      ["The requested PATH is: <code>#{path}</code>"]
-    ]
+    status  = 200
+    headers = { 'Content-Type' => 'text/html' }
+    body    = "The requested PATH is: <code>#{request.path}</code>"
+    
+    response = Rack::Response.new(body, status, headers)
+
+    response.write "<br>This is getting more structured."
+
+    response.finish
   end
 end
