@@ -1,7 +1,4 @@
-class Application
-  def call(env)
-    [200, {}, ["Hello World"]]
-  end
-end
+require './application'
 
+use Rack::Reloader, 0
 run Application.new
