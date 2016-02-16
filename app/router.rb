@@ -11,6 +11,8 @@ class Router
 
   def controller
     Object.const_get(controller_name)
+  rescue NameError
+    nil
   end
 
 
