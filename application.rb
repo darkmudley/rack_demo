@@ -16,7 +16,11 @@ class Application
   def serve_request(request)
     router = Router.new(request)
     request.params.merge!(router.path_info)
-    router.controller.new(request).send(router.action)
+    begin
+      router.controller.new(request).public_send(router.action)
+    rescue NoMethodError
+      [404, {}, ["Not Found"]]
+    end
   end
 
 end
