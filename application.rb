@@ -1,5 +1,6 @@
 require './app/router'
 require './app/controllers/dogs_controller'
+require './app/controllers/cats_controller'
 
 class Application
   def call(env)
@@ -18,7 +19,7 @@ class Application
     request.params.merge!(router.path_info)
     begin
       router.controller.new(request).public_send(router.action)
-    rescue NoMethodError
+    rescue NameError, NoMethodError
       [404, {}, ["Not Found"]]
     end
   end
