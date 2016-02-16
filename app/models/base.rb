@@ -10,7 +10,9 @@ class Base
 
     def all
       db.transaction(true) do
-        db.roots.map { |key| db[key] }
+        db.roots
+          .select { |key| key.start_with?(self.name) }
+          .map { |key| db[key] }
       end
     end
 
