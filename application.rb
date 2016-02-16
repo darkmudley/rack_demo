@@ -1,4 +1,5 @@
 require './app/router'
+require './app/controllers/dogs_controller'
 
 class Application
   def call(env)
@@ -8,14 +9,14 @@ class Application
       return build_response 404, "No Favicons here"
     end
 
+    serve_request(request)
+  end
+
+
+  def serve_request(request)
     router = Router.new(request)
-    body = "The request will be routes to: <code>#{router.controller_name}##{router.action}</code>"
-
-    build_response 200, body
+    request.params.merge!(router.path_info)
+    router.controller.new(request).send(router.action)
   end
 
-
-  def build_response(status, body)
-    [status, { 'Content-Type' => 'text/html' }, [body]]
-  end
 end
