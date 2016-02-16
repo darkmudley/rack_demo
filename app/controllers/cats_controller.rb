@@ -2,11 +2,11 @@ require './app/controllers/base_controller'
 
 class CatsController < BaseController
   def index
-    build_response 200, "this is Cats#index"
+    build_response 200, render_template(:index)
   end
 
 
   def show
-    build_response 200, "this is Cats#show  id: #{params[:id]}"
+    build_response 200, render_template(:show)
   end
 end

@@ -15,4 +15,13 @@ class BaseController
   def params
     request.params
   end
+
+
+  def render_template(name)
+    dir_name = self.class.name.downcase.sub("controller", "")
+    file_path = File.expand_path("./app/views/#{dir_name}/#{name}.html.erb")
+    if File.exists?(file_path)
+      File.read(file_path)
+    end
+  end
 end
