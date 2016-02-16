@@ -21,7 +21,8 @@ class BaseController
     dir_name = self.class.name.downcase.sub("controller", "")
     file_path = File.expand_path("./app/views/#{dir_name}/#{name}.html.erb")
     if File.exists?(file_path)
-      File.read(file_path)
+      raw = File.read(file_path)
+      ERB.new(raw).result(binding)
     end
   end
 end
