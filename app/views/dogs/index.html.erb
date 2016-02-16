@@ -9,6 +9,14 @@
       <p>
         <code><%= @title %></code>
       </p>
+
+      <ul>
+        <% @dogs.each do |dog| %>
+          <li>
+            id: <%= dog.id %> -- name: <%= dog.name %>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </body>
 </html>
