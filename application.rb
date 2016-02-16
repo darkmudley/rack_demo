@@ -1,3 +1,5 @@
+require './app/router'
+
 class Application
   def call(env)
     request = Rack::Request.new(env)
@@ -5,8 +7,9 @@ class Application
     if request.path =~ /favicon/
       return build_response 404, "No Favicons here"
     end
-    status = 200
-    body = "The requested PATH is: <code>#{request.path}</code>"
+
+    router = Router.new(request)
+    body = "You're requesting: <code>#{router.path_info}</code>"
 
     build_response 200, body
   end
