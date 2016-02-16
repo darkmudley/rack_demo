@@ -2,6 +2,9 @@ class Application
   def call(env)
     request = Rack::Request.new(env)
 
+    if request.path =~ /favicon/
+      return build_response 404, "No Favicons here"
+    end
     status = 200
     body = "The requested PATH is: <code>#{request.path}</code>"
 
