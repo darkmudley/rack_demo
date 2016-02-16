@@ -9,7 +9,7 @@ class Application
     end
 
     router = Router.new(request)
-    body = "You're requesting: <code>#{router.path_info}</code>"
+    body = "The request will be routes to: <code>#{router.controller_name}##{router.action}</code>"
 
     build_response 200, body
   end

@@ -3,8 +3,27 @@ class Router
     @request = request
   end
 
+
+  def controller_name
+    "#{path_info[:group].capitalize}Controller"
+  end
+
+
+  def action
+    if path_info[:action]
+      path_info[:action].to_sym
+    else
+      if path_info[:id]
+        :show
+      else
+        :index
+      end
+    end
+  end
+
+
   def path_info
-    {
+    @path_info ||= {
       group: path_components[0],
       id: path_components[1],
       action: path_components[2]
