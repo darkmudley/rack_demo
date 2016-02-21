@@ -7,7 +7,7 @@ class Application
     request = Rack::Request.new(env)
 
     if request.path =~ /favicon/
-      return build_response 404, "No Favicons here"
+      return [404, {}, ["No Favicons here"]]
     end
 
     serve_request(request)
