@@ -23,10 +23,15 @@ class Base
     def db_id(base)
       "#{self.name}_#{base}"
     end
+
+    def next_available_id
+      all.sort_by(&:id).last.id + 1
+    end
   end
 
 
   def save
+    ensure_id
     self.class.db.transaction do |db|
       db[db_id] = self
     end
@@ -35,5 +40,10 @@ class Base
 
   def db_id
     self.class.db_id(id)
+  end
+
+
+  def ensure_id
+    self.id ||= self.class.next_available_id
   end
 end
