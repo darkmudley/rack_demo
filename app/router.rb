@@ -12,6 +12,7 @@ class Router
       method = action
 
       if ctrl.respond_to?(method)
+        puts "\nRouting to #{controller}##{method}"
         return ctrl.public_send(method)
       end
     end
@@ -39,18 +40,25 @@ class Router
       if path_info[:id]
         :show
       else
-        :index
+        @request.get? ? :index : :create
       end
     end
   end
 
 
   def path_info
-    @path_info ||= {
-      group: path_components[0],
-      id: path_components[1],
-      action: path_components[2]
-    }
+    @path_info ||= begin
+      info = {
+        group: path_components[0],
+        id: path_components[1],
+        action: path_components[2]
+      }
+
+      if info[:id] == 'new'
+        info[:action] = info.delete(:id)
+      end
+      info
+    end
   end
 
 
