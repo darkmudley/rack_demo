@@ -4,6 +4,22 @@ class Router
   end
 
 
+  def process!
+    if klass = controller
+      @request.params.merge!(path_info)
+
+      ctrl = klass.new(@request)
+      method = action
+
+      if ctrl.respond_to?(method)
+        return ctrl.public_send(method)
+      end
+    end
+
+    not_found
+  end
+
+
   def controller_name
     "#{path_info[:group].capitalize}Controller"
   end
@@ -40,5 +56,10 @@ class Router
 
   def path_components
     @comps ||= @request.path.split("/").reject { |s| s.empty? }
+  end
+
+
+  def not_found(msg = "Not Found")
+    [404, {}, [msg]]
   end
 end
