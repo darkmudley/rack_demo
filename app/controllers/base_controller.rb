@@ -11,6 +11,10 @@ class BaseController
     [status, { 'Content-Type' => 'text/html' }, [body]]
   end
 
+  def redirect_to(url)
+    [302, { 'Location' => url }, []]
+  end
+
 
   def params
     request.params
