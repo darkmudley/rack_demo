@@ -15,6 +15,8 @@ class Router
         puts "\nRouting to #{controller}##{method}"
         return ctrl.public_send(method)
       end
+    elsif @request.path == "/"
+      return root_path
     end
 
     not_found
@@ -69,5 +71,10 @@ class Router
 
   def not_found(msg = "Not Found")
     [404, {}, [msg]]
+  end
+
+
+  def root_path
+    BaseController.new(@request).root_path
   end
 end

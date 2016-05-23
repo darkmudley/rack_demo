@@ -5,6 +5,12 @@ class BaseController
     @request = request
   end
 
+
+  def root_path
+    build_response 200, render_template(:index, '')
+  end
+
+
   private
 
   def build_response(status, body)
@@ -21,9 +27,11 @@ class BaseController
   end
 
 
-  def render_template(name)
-    dir_name = self.class.name.downcase.sub("controller", "")
-    file_path = File.expand_path("./app/views/#{dir_name}/#{name}.html.erb")
+  def render_template(name, dir=nil)
+    dir_name = dir || self.class.name.downcase.sub("controller", "")
+    file_path = File.expand_path(
+      File.join("./app/views", dir_name, "#{name}.html.erb")
+    )
     if File.exists?(file_path)
       raw = File.read(file_path)
       ERB.new(raw).result(binding)
