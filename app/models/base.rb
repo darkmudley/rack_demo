@@ -24,8 +24,14 @@ class Base
       "#{self.name}_#{base}"
     end
 
+    def all_ids
+      db.transaction(true) { |db| db.roots }
+    end
+
     def next_available_id
-      all.sort_by(&:id).last.id + 1
+      all_ids.map do |key|
+        key.sub(/[A-Za-z]+_/, '').to_i
+      end.max + 1
     end
   end
 
