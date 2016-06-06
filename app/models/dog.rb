@@ -1,5 +1,3 @@
-require './app/models/base'
-
 class Dog < Base
   attr_accessor :id, :name
 

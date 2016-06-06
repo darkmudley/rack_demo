@@ -1,3 +1,5 @@
+require 'erb'
+
 class BaseController
   attr_reader :request
 

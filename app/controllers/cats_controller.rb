@@ -1,5 +1,3 @@
-require './app/controllers/base_controller'
-
 class CatsController < BaseController
   def index
     @title = "This is Cats#index"
