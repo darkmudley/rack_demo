@@ -1,6 +1,3 @@
-require_relative './app/controllers/base_controller'
-require_relative './app/models/base'
-
 app_files = File.expand_path('../app/**/*.rb', __FILE__)
 Dir.glob(app_files).each { |file| require(file) }
 

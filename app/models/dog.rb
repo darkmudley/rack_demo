@@ -1,3 +1,5 @@
+require_relative './base.rb'
+
 class Dog < Base
   attr_accessor :id, :name
 

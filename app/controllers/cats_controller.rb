@@ -1,3 +1,5 @@
+require_relative './base_controller.rb'
+
 class CatsController < BaseController
   def index
     @title = "This is Cats#index"
