@@ -46,4 +46,20 @@ class BaseController
       "ERROR: no available template file #{template_file}"
     end
   end
+
+
+  def render_partial(template_file)
+    file_path = File.expand_path(
+      File.join("../../views", template_file),
+      __FILE__
+    )
+
+    if File.exists?(file_path)
+      puts "> Rendering partial file #{template_file}"
+      raw = File.read(file_path)
+      ERB.new(raw).result(binding)
+    else
+      "ERROR: no available partial file #{template_file}"
+    end
+  end
 end
