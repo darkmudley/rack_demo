@@ -9,7 +9,7 @@ class BaseController
 
 
   def index
-    build_response render_template(:index, '')
+    build_response render_template
   end
 
 
@@ -29,14 +29,21 @@ class BaseController
   end
 
 
-  def render_template(name, dir=nil)
-    dir_name = dir || self.class.name.downcase.sub("controller", "")
+  def render_template(name = params[:action])
+    templates_dir = self.class.name.downcase.sub("controller", "")
+    template_file = File.join(templates_dir, "#{name}.html.erb")
+
     file_path = File.expand_path(
-      File.join("./app/views", dir_name, "#{name}.html.erb")
+      File.join("../../views", template_file),
+      __FILE__
     )
+
     if File.exists?(file_path)
+      puts "Rendering template file #{template_file}"
       raw = File.read(file_path)
       ERB.new(raw).result(binding)
+    else
+      "ERROR: no available template file #{template_file}"
     end
   end
 end
