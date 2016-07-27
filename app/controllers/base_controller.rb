@@ -8,19 +8,19 @@ class BaseController
   end
 
 
-  def root_path
-    build_response 200, render_template(:index, '')
+  def index
+    build_response render_template(:index, '')
   end
 
 
   private
 
-  def build_response(status, body)
-    [status, { 'Content-Type' => 'text/html' }, [body]]
+  def build_response(body, status: 200)
+    [status, { "Content-Type" => "text/html" }, [body]]
   end
 
-  def redirect_to(url)
-    [302, { 'Location' => url }, []]
+  def redirect_to(uri)
+    [302, { "Location" => uri }, []]
   end
 
 

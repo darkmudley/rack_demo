@@ -8,6 +8,6 @@ class Application
   end
 
   def serve_request(request)
-    Router.new(request).process!
+    Router.new(request).route!
   end
 end

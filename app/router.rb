@@ -3,78 +3,68 @@ class Router
     @request = request
   end
 
+  def route!
+    if klass = controller_class
+      add_route_info_to_request_params!
 
-  def process!
-    if klass = controller
-      @request.params.merge!(path_info)
+      controller = klass.new(@request)
+      action = route_info[:action]
 
-      ctrl = klass.new(@request)
-      method = action
-
-      if ctrl.respond_to?(method)
-        puts "\nRouting to #{controller}##{method}"
-        return ctrl.public_send(method)
+      if controller.respond_to?(action)
+        puts "\nRouting to #{klass}##{action}"
+        return controller.public_send(action)
       end
-    elsif @request.path == "/"
-      return root_path
     end
 
     not_found
   end
 
+  private
 
-  def controller_name
-    "#{path_info[:group].capitalize}Controller"
+  def add_route_info_to_request_params!
+    @request.params.merge!(route_info)
   end
 
 
-  def controller
+  def controller_name
+    "#{route_info[:resource].capitalize}Controller"
+  end
+
+
+  def controller_class
     Object.const_get(controller_name)
   rescue NameError
     nil
   end
 
+  def route_info
+    @route_info ||= begin
+      resource = path_fragments[0] || "base"
+      id, action = find_id_and_action(path_fragments[1])
+      { resource: resource, id: id, action: action }
+    end
+  end
 
-  def action
-    if path_info[:action]
-      path_info[:action].to_sym
+
+  def find_id_and_action(fragment)
+    case fragment
+    when "new"
+      [nil, :new]
+    when nil
+      action = @request.get? ? :index : :create
+      [nil, action]
     else
-      if path_info[:id]
-        :show
-      else
-        @request.get? ? :index : :create
-      end
+      [fragment, :show]
     end
   end
 
 
-  def path_info
-    @path_info ||= begin
-      info = {
-        group: path_components[0],
-        id: path_components[1],
-        action: path_components[2]
-      }
-
-      if info[:id] == 'new'
-        info[:action] = info.delete(:id)
-      end
-      info
-    end
-  end
-
-
-  def path_components
-    @comps ||= @request.path.split("/").reject { |s| s.empty? }
+  def path_fragments
+    @fragments ||= @request.path.split("/").reject { |s| s.empty? }
   end
 
 
   def not_found(msg = "Not Found")
-    [404, {}, [msg]]
-  end
-
-
-  def root_path
-    BaseController.new(@request).root_path
+    [404, { "Content-Type" => "text/plain" }, [msg]]
   end
 end
