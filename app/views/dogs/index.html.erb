@@ -11,9 +11,8 @@
       <ul>
         <% @dogs.each do |dog| %>
           <li>
-            <%= dog.id %> -- 
             <a href="/dogs/<%= dog.id %>">
-              <%= dog.name %>
+              <%= "#{dog.id} - #{dog.name}" %>
             </a>
           </li>
         <% end %>
