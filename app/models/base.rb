@@ -1,7 +1,7 @@
 require 'pstore'
 
 class Base
-  class << self
+  module ClassMethods
     def find(id)
       db.transaction(true) do
         db[db_id(id)]
@@ -34,6 +34,7 @@ class Base
       end.max + 1
     end
   end
+  extend ClassMethods
 
 
   def save
