@@ -1,6 +1,8 @@
 require 'pstore'
 
 class Base
+  DB_FILE = File.expand_path("../../../db.pstore", __FILE__)
+
   module ClassMethods
 
     # Find a record by ID
@@ -41,8 +43,10 @@ class Base
 
     private
 
+    # Access to the PStore binary file
+    #
     def db
-      @db ||= PStore.new("db.pstore")
+      @db ||= PStore.new(DB_FILE)
     end
 
     # Scoped by class, so that different model classes
@@ -60,6 +64,9 @@ class Base
       end
     end
 
+    # Get all the PStore root keys (the DB IDs)
+    # scoped for the current class
+    #
     def extract_model_ids(store)
       store.roots.select do |key|
         key.start_with?(self.name)
@@ -70,12 +77,13 @@ class Base
 
 
   def save
-    ensure_id
+    ensure_presence_of_id
     self.class.save(self)
   end
 
+  private
 
-  def ensure_id
+  def ensure_presence_of_id
     self.id ||= self.class.next_available_id
   end
 end
