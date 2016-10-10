@@ -22,7 +22,7 @@ class DogsController < BaseController
 
 
   def create
-    dog = Dog.new(nil, params['dog']['name'])
+    dog = Dog.new(name: params['dog']['name'])
     dog.save
 
     redirect_to "dogs/#{dog.id}"
