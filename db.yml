@@ -1,0 +1,7 @@
+---
+Dog_1: !ruby/object:Dog
+  id: 1
+  name: Poop Machine
+Dog_2: !ruby/object:Dog
+  id: 2
+  name: Fido
