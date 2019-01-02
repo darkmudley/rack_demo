@@ -5,9 +5,14 @@
     <div>
       <h1><%= @title %></h1>
       <p>
+        <a href="/">Home</a>
+      </p>
+      <p>
         <a href="/dogs/new">Create a new dog</a>
       </p>
-
+      <p>
+        <a href="/dogs/delete">Delete a dog</a>
+      </p>
       <ul>
         <% @dogs.each do |dog| %>
           <li>

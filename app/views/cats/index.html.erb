@@ -1,14 +1,28 @@
 <html>
-  <head>
-    <title>Cats</title>
-  </head>
+  <%= render_partial "base/_head.html.erb" %>
 
   <body>
     <div>
-      <h1>Cats</h1>
+      <h1><%= @title %></h1>
       <p>
-        <code><%= @title %></code>
+        <a href="/">Home</a>
       </p>
+      <p>
+        <a href="/cats/new">Create a new cat</a>
+      </p>
+      <p>
+        <a href="/cats/delete">Delete a cat</a>
+      </p>
+
+      <ul>
+        <% @cats.each do |cat| %>
+          <li>
+            <a href="/cats/<%= cat.id %>">
+              <%= "#{cat.id} - #{cat.name}" %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </body>
 </html>

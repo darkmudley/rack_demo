@@ -25,9 +25,21 @@ class Base
     # Store an instance in the DB
     #
     def save(object)
+		  puts "Save: Object ID is #{object.id}\n"
       db_id = derive_db_id(object.class.name, object.id)
       db.transaction do
         db[db_id] = object
+      end
+    end
+
+    # Delete an instance from the DB
+    #
+    def remove(object)
+			puts "Model Remove Object ID is #{object.id}\n"
+      db_id = derive_db_id(object.class.name, object.id)
+			puts "Found db_id: #{db_id}\n"
+      db.transaction do
+				db.delete(db_id)
       end
     end
 
@@ -75,9 +87,14 @@ class Base
   end
   extend ClassMethods
 
+	def remove
+		puts "Model Remove: Cat ID is #{self.id}\n"
+		self.class.remove(self)
+	end
 
   def save
     ensure_presence_of_id
+		puts "Save: Cat ID is #{self.id}\n"
     self.class.save(self)
   end
 

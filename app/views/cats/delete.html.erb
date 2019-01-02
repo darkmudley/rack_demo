@@ -1,0 +1,19 @@
+<html>
+  <%= render_partial "base/_head.html.erb" %>
+
+  <body>
+    <div>
+      <h1><%= @title %></h1>
+        <form action="/cats/remove" method="POST">
+        <p>
+          <a href="/cats">Back to the list</a>
+        </p>
+        <div>
+          <label for="cat_id">The cat's ID</label>
+          <input type="text" name="cat[id]" id="cat_id">
+        </div>
+        <input type="submit" name="commit" value="delete">
+      </form>
+    </div>
+  </body>
+</html>

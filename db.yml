@@ -1,7 +1,25 @@
 ---
+Cat_1: !ruby/object:Cat
+  id: 1
+  name: Jaz
+Cat_2: !ruby/object:Cat
+  id: 2
+  name: Dexter
+Cat_3: !ruby/object:Cat
+  id: 3
+  name: Molly
+Cat_4: !ruby/object:Cat
+  id: 4
+  name: Joe
 Dog_1: !ruby/object:Dog
   id: 1
-  name: Poop Machine
+  name: Kipper
 Dog_2: !ruby/object:Dog
   id: 2
-  name: Fido
+  name: Coco
+Cat_5: !ruby/object:Cat
+  id: 5
+  name: Bailey
+Cat_6: !ruby/object:Cat
+  id: 6
+  name: Arthur

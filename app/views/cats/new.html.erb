@@ -1,0 +1,19 @@
+<html>
+  <%= render_partial "base/_head.html.erb" %>
+
+  <body>
+    <div>
+      <h1><%= @title %></h1>
+      <form action="/cats/create" method="POST">
+        <p>
+          <a href="/cats">Back to the list</a>
+        </p>
+        <div>
+          <label for="cat_name">The cat's name</label>
+          <input type="text" name="cat[name]" id="cat_name">
+        </div>
+        <input type="submit" name="commit" value="create">
+      </form>
+    </div>
+  </body>
+</html>
