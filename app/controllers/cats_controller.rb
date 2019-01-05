@@ -19,7 +19,7 @@ class CatsController < BaseController
   end
 
   def create
-    cat = Cat.new(name: params['cat']['name'])
+    cat = Cat.new(name: params['cat']['name'], colour: params['cat']['colour'])
     puts "Controller Create #{cat.name}"
     cat.save
     redirect_to "/cats"
