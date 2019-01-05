@@ -23,3 +23,7 @@ Cat_5: !ruby/object:Cat
 Cat_6: !ruby/object:Cat
   id: 6
   name: Arthur
+Cat_7: !ruby/object:Cat
+  id: 7
+  name: Fidget
+  colour: Ginger
